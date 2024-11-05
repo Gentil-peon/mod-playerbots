@@ -7,6 +7,7 @@
 #include "RaidNaxxStrategy.h"
 #include "RaidMcStrategy.h"
 #include "RaidAq20Strategy.h"
+#include "RaidAq40Strategy.h"
 #include "RaidIccStrategy.h"
 
 class RaidStrategyContext : public NamedObjectContext<Strategy>
@@ -20,6 +21,7 @@ public:
         creators["mc"] = &RaidStrategyContext::mc;
         creators["bwl"] = &RaidStrategyContext::bwl;
         creators["aq20"] = &RaidStrategyContext::aq20;
+        creators["aq40"] = &RaidStrategyContext::aq40;
         creators["naxx"] = &RaidStrategyContext::naxx;
         creators["uld"] = &RaidStrategyContext::uld;
         creators["icc"] = &RaidStrategyContext::icc;
@@ -29,6 +31,7 @@ private:
     static Strategy* mc(PlayerbotAI* botAI) { return new RaidMcStrategy(botAI); }
     static Strategy* bwl(PlayerbotAI* botAI) { return new RaidBwlStrategy(botAI); }
     static Strategy* aq20(PlayerbotAI* botAI) { return new RaidAq20Strategy(botAI); }
+    static Strategy* aq40(PlayerbotAI* botAI) { return new RaidAq40Strategy(botAI); }
     static Strategy* naxx(PlayerbotAI* botAI) { return new RaidNaxxStrategy(botAI); }
     static Strategy* uld(PlayerbotAI* botAI) { return new RaidUlduarStrategy(botAI); }
     static Strategy* icc(PlayerbotAI* botAI) { return new RaidIccStrategy(botAI); }

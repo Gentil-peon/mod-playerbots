@@ -28,6 +28,8 @@
 #include "raids/moltencore/RaidMcTriggerContext.h"
 #include "raids/aq20/RaidAq20ActionContext.h"
 #include "raids/aq20/RaidAq20TriggerContext.h"
+#include "raids/aq40/RaidAq40ActionContext.h"
+#include "raids/aq40/RaidAq40TriggerContext.h"
 #include "dungeons/DungeonStrategyContext.h"
 #include "dungeons/wotlk/WotlkDungeonActionContext.h"
 #include "dungeons/wotlk/WotlkDungeonTriggerContext.h"
@@ -47,6 +49,7 @@ AiObjectContext::AiObjectContext(PlayerbotAI* botAI) : PlayerbotAIAware(botAI)
     actionContexts.Add(new RaidMcActionContext());
     actionContexts.Add(new RaidBwlActionContext());
     actionContexts.Add(new RaidAq20ActionContext());
+    actionContexts.Add(new RaidAq40ActionContext());
     actionContexts.Add(new RaidNaxxActionContext());
     actionContexts.Add(new RaidUlduarActionContext());
     actionContexts.Add(new RaidIccActionContext());
@@ -59,7 +62,6 @@ AiObjectContext::AiObjectContext(PlayerbotAI* botAI) : PlayerbotAIAware(botAI)
     actionContexts.Add(new WotlkDungeonGDActionContext());
     actionContexts.Add(new WotlkDungeonHoSActionContext());
     actionContexts.Add(new WotlkDungeonHoLActionContext());
-    actionContexts.Add(new WotlkDungeonOccActionContext());
     actionContexts.Add(new WotlkDungeonUPActionContext());
     actionContexts.Add(new WotlkDungeonCoSActionContext());
 
@@ -69,6 +71,7 @@ AiObjectContext::AiObjectContext(PlayerbotAI* botAI) : PlayerbotAIAware(botAI)
     triggerContexts.Add(new RaidMcTriggerContext());
     triggerContexts.Add(new RaidBwlTriggerContext());
     triggerContexts.Add(new RaidAq20TriggerContext());
+    triggerContexts.Add(new RaidAq40TriggerContext());
     triggerContexts.Add(new RaidNaxxTriggerContext());
     triggerContexts.Add(new RaidUlduarTriggerContext());
     triggerContexts.Add(new RaidIccTriggerContext());
@@ -81,7 +84,6 @@ AiObjectContext::AiObjectContext(PlayerbotAI* botAI) : PlayerbotAIAware(botAI)
     triggerContexts.Add(new WotlkDungeonGDTriggerContext());
     triggerContexts.Add(new WotlkDungeonHoSTriggerContext());
     triggerContexts.Add(new WotlkDungeonHoLTriggerContext());
-    triggerContexts.Add(new WotlkDungeonOccTriggerContext());
     triggerContexts.Add(new WotlkDungeonUPTriggerContext());
     triggerContexts.Add(new WotlkDungeonCoSTriggerContext());
 
