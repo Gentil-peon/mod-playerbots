@@ -103,13 +103,15 @@ public:
     void LogPlayerLocation();
     void UpdateAIInternal(uint32 elapsed, bool minimal = false) override;
 
-//private:
+private:
+    //void ScaleBotActivity();
 
 public:
     uint32 activeBots = 0;
     static bool HandlePlayerbotConsoleCommand(ChatHandler* handler, char const* args);
     bool IsRandomBot(Player* bot);
     bool IsRandomBot(ObjectGuid::LowType bot);
+    bool IsAddclassBot(ObjectGuid::LowType bot);
     void Randomize(Player* bot);
     void Clear(Player* bot);
     void RandomizeFirst(Player* bot);
@@ -163,19 +165,26 @@ public:
         return BattleMastersCache;
     }
 
+    float getActivityMod() { return activityMod; }
+    float getActivityPercentage() { return activityMod * 100.0f; }
+    void setActivityPercentage(float percentage) { activityMod = percentage / 100.0f; }
     static uint8 GetTeamClassIdx(bool isAlliance, uint8 claz) { return isAlliance * 20 + claz; }
 
-    bool isBotInitializing() const { return _isBotInitializing; }
-    void setBotInitializing(bool completed) { _isBotInitializing = completed; }
-
     void PrepareAddclassCache();
-    std::map<uint8, std::vector<ObjectGuid>> addclassCache;
+    void PrepareTeleportCache();
+    void Init();
+    std::map<uint8, std::unordered_set<ObjectGuid>> addclassCache;
+    std::map<uint8, std::vector<WorldLocation>> locsPerLevelCache;
+    std::map<uint8, std::vector<WorldLocation>> allianceStarterPerLevelCache;
+    std::map<uint8, std::vector<WorldLocation>> hordeStarterPerLevelCache;
+    std::map<uint8, std::vector<WorldLocation>> bankerLocsPerLevelCache;
 protected:
     void OnBotLoginInternal(Player* const bot) override;
 
 private:
     // pid values are set in constructor
     botPID pid = botPID(1, 50, -50, 0, 0, 0);
+    float activityMod = 0.25;
     bool _isBotInitializing = true;
     uint32 GetEventValue(uint32 bot, std::string const event);
     std::string const GetEventData(uint32 bot, std::string const event);
@@ -186,19 +195,18 @@ private:
     time_t BgCheckTimer;
     time_t LfgCheckTimer;
     time_t PlayersCheckTimer;
+    time_t printStatsTimer;
     uint32 AddRandomBots();
     bool ProcessBot(uint32 bot);
     void ScheduleRandomize(uint32 bot, uint32 time);
     void RandomTeleport(Player* bot);
     void RandomTeleport(Player* bot, std::vector<WorldLocation>& locs, bool hearth = false);
     uint32 GetZoneLevel(uint16 mapId, float teleX, float teleY, float teleZ);
-    void PrepareTeleportCache();
     typedef void (RandomPlayerbotMgr::*ConsoleCommandHandler)(Player*);
 
     std::vector<Player*> players;
     uint32 processTicks;
-    std::map<uint8, std::vector<WorldLocation>> locsPerLevelCache;
-    std::map<uint8, std::vector<WorldLocation>> bankerLocsPerLevelCache;
+    
 
     // std::map<uint32, std::vector<WorldLocation>> rpgLocsCache;
     std::map<uint32, std::map<uint32, std::vector<WorldLocation>>> rpgLocsCacheLevel;

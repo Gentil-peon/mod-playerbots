@@ -5,6 +5,8 @@
 #include "Strategy.h"
 #include "RaidBwlStrategy.h"
 #include "RaidNaxxStrategy.h"
+#include "RaidOsStrategy.h"
+#include "RaidEoEStrategy.h"
 #include "RaidMcStrategy.h"
 #include "RaidAq20Strategy.h"
 #include "RaidAq40Strategy.h"
@@ -23,6 +25,8 @@ public:
         creators["aq20"] = &RaidStrategyContext::aq20;
         creators["aq40"] = &RaidStrategyContext::aq40;
         creators["naxx"] = &RaidStrategyContext::naxx;
+        creators["wotlk-os"] = &RaidStrategyContext::wotlk_os;
+        creators["wotlk-eoe"] = &RaidStrategyContext::wotlk_eoe;
         creators["uld"] = &RaidStrategyContext::uld;
         creators["icc"] = &RaidStrategyContext::icc;
     }
@@ -33,6 +37,8 @@ private:
     static Strategy* aq20(PlayerbotAI* botAI) { return new RaidAq20Strategy(botAI); }
     static Strategy* aq40(PlayerbotAI* botAI) { return new RaidAq40Strategy(botAI); }
     static Strategy* naxx(PlayerbotAI* botAI) { return new RaidNaxxStrategy(botAI); }
+    static Strategy* wotlk_os(PlayerbotAI* botAI) { return new RaidOsStrategy(botAI); }
+    static Strategy* wotlk_eoe(PlayerbotAI* botAI) { return new RaidEoEStrategy(botAI); }
     static Strategy* uld(PlayerbotAI* botAI) { return new RaidUlduarStrategy(botAI); }
     static Strategy* icc(PlayerbotAI* botAI) { return new RaidIccStrategy(botAI); }
 };

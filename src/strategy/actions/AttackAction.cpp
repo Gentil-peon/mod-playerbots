@@ -74,6 +74,15 @@ bool AttackAction::Attack(Unit* target, bool with_pet /*true*/)
     {
         return false;
     }
+
+    if (!bot->IsValidAttackTarget(target))
+    {
+        if (verbose)
+            botAI->TellError("I cannot attack an invalid target");
+
+        return false;
+    }
+
     std::ostringstream msg;
     msg << target->GetName();
 
@@ -88,9 +97,11 @@ bool AttackAction::Attack(Unit* target, bool with_pet /*true*/)
 
     if (!bot->IsWithinLOSInMap(target))
     {
-        msg << " is not on my sight";
+        msg << " is not in my sight";
         if (verbose)
             botAI->TellError(msg.str());
+        
+        return false;
     }
 
     if (target->isDead())
@@ -98,6 +109,15 @@ bool AttackAction::Attack(Unit* target, bool with_pet /*true*/)
         msg << " is dead";
         if (verbose)
             botAI->TellError(msg.str());
+
+        return false;
+    }
+
+    if (sPlayerbotAIConfig->IsInPvpProhibitedZone(bot->GetZoneId())
+        && (target->IsPlayer() || target->IsPet()))
+    {
+        if (verbose)
+            botAI->TellError("I cannot attack others in PvP prohibited zones");
 
         return false;
     }
@@ -123,7 +143,8 @@ bool AttackAction::Attack(Unit* target, bool with_pet /*true*/)
     context->GetValue<LootObjectStack*>("available loot")->Get()->Add(guid);
 
     LastMovement& lastMovement = AI_VALUE(LastMovement&, "last movement");
-    if (lastMovement.priority < MovementPriority::MOVEMENT_COMBAT && bot->isMoving())
+    bool moveControlled = bot->GetMotionMaster()->GetMotionSlotType(MOTION_SLOT_CONTROLLED) != NULL_MOTION_TYPE;
+    if (lastMovement.priority < MovementPriority::MOVEMENT_COMBAT && bot->isMoving() && !moveControlled)
     {
         AI_VALUE(LastMovement&, "last movement").clear();
         bot->GetMotionMaster()->Clear(false);
