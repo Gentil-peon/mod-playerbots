@@ -28,6 +28,8 @@
 #include "raids/obsidiansanctum/RaidOsTriggerContext.h"
 #include "raids/eyeofeternity/RaidEoEActionContext.h"
 #include "raids/vaultofarchavon/RaidVoATriggerContext.h"
+#include "raids/onyxia/RaidOnyxiaActionContext.h"
+#include "raids/onyxia/RaidOnyxiaTriggerContext.h"
 #include "raids/vaultofarchavon/RaidVoAActionContext.h"
 #include "raids/eyeofeternity/RaidEoETriggerContext.h"
 #include "raids/moltencore/RaidMcActionContext.h"
@@ -54,6 +56,7 @@ AiObjectContext::AiObjectContext(PlayerbotAI* botAI) : PlayerbotAIAware(botAI)
     actionContexts.Add(new WorldPacketActionContext());
     actionContexts.Add(new RaidMcActionContext());
     actionContexts.Add(new RaidBwlActionContext());
+    actionContexts.Add(new RaidOnyxiaActionContext());
     actionContexts.Add(new RaidAq20ActionContext());
     actionContexts.Add(new RaidAq40ActionContext());
     actionContexts.Add(new RaidNaxxActionContext());
@@ -80,6 +83,7 @@ AiObjectContext::AiObjectContext(PlayerbotAI* botAI) : PlayerbotAIAware(botAI)
     triggerContexts.Add(new WorldPacketTriggerContext());
     triggerContexts.Add(new RaidMcTriggerContext());
     triggerContexts.Add(new RaidBwlTriggerContext());
+    triggerContexts.Add(new RaidOnyxiaTriggerContext());
     triggerContexts.Add(new RaidAq20TriggerContext());
     triggerContexts.Add(new RaidAq40TriggerContext());
     triggerContexts.Add(new RaidNaxxTriggerContext());
