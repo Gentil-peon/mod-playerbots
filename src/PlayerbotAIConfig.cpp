@@ -128,6 +128,7 @@ bool PlayerbotAIConfig::Initialize()
 
     allowAccountBots = sConfigMgr->GetOption<bool>("AiPlayerbot.AllowAccountBots", true);
     allowGuildBots = sConfigMgr->GetOption<bool>("AiPlayerbot.AllowGuildBots", true);
+    allowTrustedAccountBots = sConfigMgr->GetOption<bool>("AiPlayerbot.AllowTrustedAccountBots", true);
     randomBotGuildNearby = sConfigMgr->GetOption<bool>("AiPlayerbot.RandomBotGuildNearby", false);
     randomBotInvitePlayer = sConfigMgr->GetOption<bool>("AiPlayerbot.RandomBotInvitePlayer", false);
     inviteChat = sConfigMgr->GetOption<bool>("AiPlayerbot.InviteChat", false);
@@ -329,6 +330,12 @@ bool PlayerbotAIConfig::Initialize()
     useFastGroundMountAtMinLevel = sConfigMgr->GetOption<int32>("AiPlayerbot.UseFastGroundMountAtMinLevel", 40);
     useFlyMountAtMinLevel = sConfigMgr->GetOption<int32>("AiPlayerbot.UseFlyMountAtMinLevel", 60);
     useFastFlyMountAtMinLevel = sConfigMgr->GetOption<int32>("AiPlayerbot.UseFastFlyMountAtMinLevel", 70);
+
+    // stagger bot flightpath takeoff
+    delayMin = sConfigMgr->GetOption<uint32>("AiPlayerbot.BotTaxiDelayMinMs", 350u);
+    delayMax = sConfigMgr->GetOption<uint32>("AiPlayerbot.BotTaxiDelayMaxMs", 5000u);
+    gapMs = sConfigMgr->GetOption<uint32>("AiPlayerbot.BotTaxiGapMs", 200u);
+    gapJitterMs = sConfigMgr->GetOption<uint32>("AiPlayerbot.BotTaxiGapJitterMs", 100u);
 
     LOG_INFO("server.loading", "Loading TalentSpecs...");
 
@@ -554,7 +561,7 @@ bool PlayerbotAIConfig::Initialize()
     {
         sRandomPlayerbotMgr->Init();
     }
-    
+
     sRandomItemMgr->Init();
     sRandomItemMgr->InitAfterAhBot();
     sPlayerbotTextMgr->LoadBotTexts();
